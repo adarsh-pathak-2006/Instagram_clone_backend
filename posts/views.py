@@ -15,10 +15,10 @@ class PostAPI(ListCreateAPIView):
     serializer_class=PostSerializer
 
     def get_queryset(self):
-        profile_data=Profile.objects.filter(user=self.request.user)
+        profile_data=Profile.objects.get(user=self.request.user)
         return Post.objects.filter(user=profile_data)
     def perform_create(self, serializer):
-        profile_data=Profile.objects.filter(user=self.request.user)
+        profile_data=Profile.objects.get(user=self.request.user)
         serializer.save(user=profile_data)
 
 class ReelAPI(ListCreateAPIView):
@@ -27,10 +27,10 @@ class ReelAPI(ListCreateAPIView):
     serializer_class=ReelSerializer
 
     def get_queryset(self):
-        profile_data=Profile.objects.filter(user=self.request.user)
+        profile_data=Profile.objects.get(user=self.request.user)
         return Reel.objects.filter(user=profile_data)
     def perform_create(self, serializer):
-        profile_data=Profile.objects.filter(user=self.request.user)
+        profile_data=Profile.objects.get(user=self.request.user)
         serializer.save(user=profile_data)
 
 class PostCommentAPI(APIView):
