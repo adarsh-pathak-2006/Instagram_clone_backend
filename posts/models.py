@@ -17,6 +17,7 @@ class Reel(models.Model):
     video=models.URLField()
     title=models.CharField(max_length=300)
     description=models.TextField(null=True)
+    created=models.DateTimeField(auto_now_add=True)
     likes=models.ManyToManyField(Profile, related_name='liked_reels', null=True)
 
     def __str__(self):
