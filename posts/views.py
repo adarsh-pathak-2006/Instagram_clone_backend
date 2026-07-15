@@ -118,3 +118,34 @@ class ReelReplyAPI(APIView):
         else:
             return Response(serial.errors)
 
+
+class PostLikeAPI(APIView):
+    throttle_classes = [InAppThrottle]
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request, pk):
+        post = get_object_or_404(Post, id=pk)
+        profile = get_object_or_404(Profile, user=request.user)
+        
+        if profile in post.likes.all():
+            post.likes.remove(profile)
+            return Response({'message': 'Post unliked', 'liked': False})
+        else:
+            post.likes.add(profile)
+            return Response({'message': 'Post liked', 'liked': True})
+
+
+class ReelLikeAPI(APIView):
+    throttle_classes = [InAppThrottle]
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request, pk):
+        reel = get_object_or_404(Reel, id=pk)
+        profile = get_object_or_404(Profile, user=request.user)
+        
+        if profile in reel.likes.all():
+            reel.likes.remove(profile)
+            return Response({'message': 'Reel unliked', 'liked': False})
+        else:
+            reel.likes.add(profile)
+            return Response({'message': 'Reel liked', 'liked': True})
