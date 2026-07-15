@@ -10,6 +10,7 @@ class ChatSerializer(ModelSerializer):
         fields=['user1', 'user2', 'created']
 
 class ConversationSerailizer(ModelSerializer):
+    chat=ChatSerializer(read_only=True)
     class Meta:
         model=Conversation
         fields='__all__'
