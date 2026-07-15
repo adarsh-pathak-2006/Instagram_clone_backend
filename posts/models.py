@@ -31,7 +31,7 @@ class PostComment(models.Model):
     
 class PostCommentReply(models.Model):
     user=models.ManyToManyField(Profile)
-    comment=models.ForeignKey(PostComment, on_delete=models.CASCADE)
+    comment=models.ForeignKey(PostComment, on_delete=models.CASCADE, related_name='replies')
     reply=models.TextField()
 
     def __str__(self):
@@ -47,7 +47,7 @@ class ReelComment(models.Model):
     
 class ReelCommentReply(models.Model):
     user=models.ManyToManyField(Profile)
-    comment=models.ForeignKey(ReelComment, on_delete=models.CASCADE)
+    comment=models.ForeignKey(ReelComment, on_delete=models.CASCADE, related_name='replies')
     reply=models.TextField()
 
     def __str__(self):

@@ -13,9 +13,14 @@ class UserSerializer(ModelSerializer):
         fields=['first_name', 'last_name', 'username']
 
 class ProfileSerializer(ModelSerializer):
+    user=UserSerializer(read_only=True)
     class Meta:
         model=Profile
         fields=['user', 'name', 'bio', 'created_on']
-        read_only_fields=['user']
+
+class ProfileResourceSerailizer(ModelSerializer):
+    class Meta:
+        model=Profile
+        fields=['user', 'name', 'bio', 'created_on']
 
 
