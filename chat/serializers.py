@@ -14,3 +14,8 @@ class ConversationSerailizer(ModelSerializer):
     class Meta:
         model=Conversation
         fields='__all__'
+
+class MessageSerializer(ModelSerializer):
+    class Meta:
+        model=Conversation
+        fields=['message']
