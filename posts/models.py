@@ -5,7 +5,7 @@ class Post(models.Model):
     user=models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts')
     title=models.CharField(max_length=300)
     description=models.TextField(null=True)
-    attachment=models.URLField(null=True)
+    attachment=models.FileField(upload_to='posts/', null=True, blank=True)
     created=models.DateTimeField(auto_now_add=True)
     likes=models.ManyToManyField(Profile, related_name='liked_posts', blank=True)
 
@@ -14,7 +14,7 @@ class Post(models.Model):
     
 class Reel(models.Model):
     user=models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='reels')
-    video=models.URLField()
+    video=models.FileField(upload_to='reels/')
     title=models.CharField(max_length=300)
     description=models.TextField(null=True)
     created=models.DateTimeField(auto_now_add=True)

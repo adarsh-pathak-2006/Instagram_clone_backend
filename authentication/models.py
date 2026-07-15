@@ -5,6 +5,7 @@ class Profile(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE)
     name=models.CharField(max_length=120)
     bio=models.TextField(null=True)
+    profile_picture=models.ImageField(upload_to='profile_pics/', null=True, blank=True)
     created_on=models.DateTimeField(auto_now_add=True)
     followers=models.ManyToManyField("self", symmetrical=False, related_name="following", blank=True)
     

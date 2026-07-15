@@ -16,7 +16,7 @@ class ProfileResourceSerializer(ModelSerializer):
     following_count = IntegerField(source='following.count', read_only=True)
     class Meta:
         model=Profile
-        fields=['user', 'name', 'bio', 'created_on', 'followers_count', 'following_count']
+        fields=['user', 'name', 'bio', 'profile_picture', 'created_on', 'followers_count', 'following_count']
 
 from posts.serializers import PostSerializer, ReelSerializer
 
@@ -28,5 +28,5 @@ class ProfileSerializer(ModelSerializer):
     following_count = IntegerField(source='following.count', read_only=True)
     class Meta:
         model=Profile
-        fields=['user', 'name', 'bio', 'created_on', 'liked_posts', 'liked_reels', 'posts', 'reels', 'followers_count', 'following_count']
+        fields=['user', 'name', 'bio', 'profile_picture', 'created_on', 'liked_posts', 'liked_reels', 'posts', 'reels', 'followers_count', 'following_count']
 
