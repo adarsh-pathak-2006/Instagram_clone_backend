@@ -1,6 +1,8 @@
 from rest_framework.serializers import ModelSerializer
-from auth.models import *
+from auth.models import Profile
 from django.contrib.auth.models import User
+from posts.serializers import PostSerializer, ReelSerializer
+
 
 class RegisterSerializer(ModelSerializer):
     class Meta:
@@ -12,15 +14,17 @@ class UserSerializer(ModelSerializer):
         model=User
         fields=['first_name', 'last_name', 'username']
 
-class ProfileSerializer(ModelSerializer):
-    user=UserSerializer(read_only=True)
-    class Meta:
-        model=Profile
-        fields=['user', 'name', 'bio', 'created_on', 'liked_posts', 'liked_reels', 'posts']
-
 class ProfileResourceSerailizer(ModelSerializer):
     class Meta:
         model=Profile
         fields=['user', 'name', 'bio', 'created_on']
 
+class ProfileSerializer(ModelSerializer):
+    user=UserSerializer(read_only=True)
+    following=ProfileResourceSerailizer(read_only=True, many=True)
+    posts=PostSerializer(read_only=True, many=True)
+    reels=ReelSerializer(read_only=True, many=True)
+    class Meta:
+        model=Profile
+        fields=['user', 'name', 'bio', 'created_on', 'liked_posts', 'liked_reels', 'posts', 'reels']
 

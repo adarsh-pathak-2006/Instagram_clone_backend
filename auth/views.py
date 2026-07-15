@@ -1,5 +1,4 @@
-from django.shortcuts import render, get_object_or_404
-from auth.serializers import ProfileSerializer, UserSerializer, RegisterSerializer
+from auth.serializers import ProfileSerializer, RegisterSerializer, FollowerFollowingSerializer
 from auth.models import Profile
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
@@ -31,3 +30,4 @@ class ProfileAPI(RetrieveUpdateAPIView):
 
     def get_queryset(self):
         return Profile.objects.filter(user=self.request.user)
+    

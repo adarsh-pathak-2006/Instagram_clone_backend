@@ -1,3 +1,6 @@
 from django.db import models
+from auth.models import Profile
 
-# Create your models here.
+
+#will continue after setting up follower and following systems
+
