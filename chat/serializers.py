@@ -7,7 +7,7 @@ class ChatSerializer(ModelSerializer):
     user2=ProfileResourceSerializer(read_only=True)
     class Meta:
         model=Chat
-        fields=['user1', 'user2', 'created']
+        fields=['id', 'user1', 'user2', 'created']
 
 class ConversationSerializer(ModelSerializer):
     chat=ChatSerializer(read_only=True)
