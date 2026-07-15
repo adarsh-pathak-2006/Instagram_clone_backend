@@ -1,4 +1,4 @@
-from authentication.serializers import ProfileSerializer, RegisterSerializer
+from authentication.serializers import ProfileSerializer, RegisterSerializer, ProfileResourceSerailizer
 from authentication.models import Profile
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
@@ -43,6 +43,6 @@ class MyProfileAPI(RetrieveUpdateAPIView):
 class ProfileAPI(RetrieveAPIView):
     permission_classes=[IsAuthenticated]
     throttle_classes=[GeneralThrottle]
-    serializer_class=ProfileSerializer
+    serializer_class=ProfileResourceSerailizer
     queryset=Profile.objects.all()
 

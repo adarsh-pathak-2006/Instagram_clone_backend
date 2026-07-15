@@ -7,7 +7,7 @@ class Post(models.Model):
     description=models.TextField(null=True)
     attachment=models.URLField(null=True)
     created=models.DateTimeField(auto_now_add=True)
-    likes=models.ManyToManyField(Profile, related_name='liked_posts', null=True)
+    likes=models.ManyToManyField(Profile, related_name='liked_posts', blank=True)
 
     def __str__(self):
         return self.title[:100]
@@ -18,7 +18,7 @@ class Reel(models.Model):
     title=models.CharField(max_length=300)
     description=models.TextField(null=True)
     created=models.DateTimeField(auto_now_add=True)
-    likes=models.ManyToManyField(Profile, related_name='liked_reels', null=True)
+    likes=models.ManyToManyField(Profile, related_name='liked_reels', blank=True)
 
     def __str__(self):
         return self.title[:100]
