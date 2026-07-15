@@ -19,3 +19,36 @@ class Reel(models.Model):
 
     def __str__(self):
         return self.title[:100]
+    
+
+class PostComment(models.Model):
+    user=models.ManyToManyField(Profile, related_name='comments_on_posts')
+    post=models.ForeignKey(Post, on_delete=models.CASCADE)
+    comment=models.TextField()
+
+    def __str__(self):
+        return self.post.title[:100]
+    
+class PostCommentReply(models.Model):
+    user=models.ManyToManyField(Profile)
+    comment=models.ForeignKey(PostComment, on_delete=models.CASCADE)
+    reply=models.TextField()
+
+    def __str__(self):
+        return self.comment.comment[:100]
+    
+class ReelComment(models.Model):
+    user=models.ManyToManyField(Profile, related_name='comments_on_reels')
+    reel=models.ForeignKey(Reel, on_delete=models.CASCADE)
+    comment=models.TextField()
+
+    def __str__(self):
+        return self.reel.title
+    
+class ReelCommentReply(models.Model):
+    user=models.ManyToManyField(Profile)
+    comment=models.ForeignKey(ReelComment, on_delete=models.CASCADE)
+    reply=models.TextField()
+
+    def __str__(self):
+        return self.comment.comment[:100]
