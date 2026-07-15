@@ -16,7 +16,7 @@ class ProfileSerializer(ModelSerializer):
     user=UserSerializer(read_only=True)
     class Meta:
         model=Profile
-        fields=['user', 'name', 'bio', 'created_on']
+        fields=['user', 'name', 'bio', 'created_on', 'liked_posts', 'liked_reels', 'posts']
 
 class ProfileResourceSerailizer(ModelSerializer):
     class Meta:
