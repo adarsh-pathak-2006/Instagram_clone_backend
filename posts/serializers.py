@@ -34,11 +34,11 @@ class PostCommentSerializer(ModelSerializer):
     replies=PostCommentReplySerializer(read_only=True, many=True)
     class Meta:
         model=PostComment
-        fields=['user', 'comment', 'replies']
+        fields=['user', 'comment', 'replies', 'created']
 
 class ReelCommentSerializer(ModelSerializer):
     user=ProfileResourceSerailizer(read_only=True)
     replies=ReelCommentReplySerializer(read_only=True, many=True)
     class Meta:
         model=ReelComment
-        fields=['user', 'comment', 'replies']
+        fields=['user', 'comment', 'replies', 'created']
