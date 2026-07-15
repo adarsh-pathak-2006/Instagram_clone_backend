@@ -48,9 +48,11 @@ class PostCommentAPI(APIView):
         if serial.is_valid():
             post_data=get_object_or_404(Post, id=pk)
             user_data=get_object_or_404(Profile, user=request.user)
-            serial.save(post=post_data, user=user_data)
+            comment = serial.save(post=post_data)
+            comment.user.add(user_data)
+            return Response({'message': 'Comment added successfully'})
         else:
-            return Response({ 'invalid':'invalid inputs' })
+            return Response(serial.errors)
 
 class PostReplyAPI(APIView):
     throttle_classes=[InAppThrottle]
@@ -68,9 +70,11 @@ class PostReplyAPI(APIView):
             post_data=get_object_or_404(Post, id=pk)
             profile_data=get_object_or_404(Profile, user=request.user)
             comment_data=get_object_or_404(PostComment, post=post_data, id=ck)
-            serial.save(user=profile_data, comment=comment_data)
+            reply = serial.save(comment=comment_data)
+            reply.user.add(profile_data)
+            return Response({'message': 'Reply added successfully'})
         else:
-            return Response({ 'invalid':'invalid inputs' })
+            return Response(serial.errors)
         
 class ReelCommentAPI(APIView):
     throttle_classes=[InAppThrottle]
@@ -86,9 +90,11 @@ class ReelCommentAPI(APIView):
         if serial.is_valid():
             reel_data=get_object_or_404(Reel, id=pk)
             user_data=get_object_or_404(Profile, user=request.user)
-            serial.save(reel=reel_data, user=user_data)
+            comment = serial.save(reel=reel_data)
+            comment.user.add(user_data)
+            return Response({'message': 'Comment added successfully'})
         else:
-            return Response({ 'invalid':'invalid inputs' })
+            return Response(serial.errors)
 
 class ReelReplyAPI(APIView):
     throttle_classes=[InAppThrottle]
@@ -106,7 +112,9 @@ class ReelReplyAPI(APIView):
             reel_data=get_object_or_404(Reel, id=pk)
             profile_data=get_object_or_404(Profile, user=request.user)
             comment_data=get_object_or_404(ReelComment, reel=reel_data, id=ck)
-            serial.save(user=profile_data, comment=comment_data)
+            reply = serial.save(comment=comment_data)
+            reply.user.add(profile_data)
+            return Response({'message': 'Reply added successfully'})
         else:
-            return Response({ 'invalid':'invalid inputs' })
+            return Response(serial.errors)
 

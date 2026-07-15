@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, IntegerField
 from authentication.models import Profile
 from django.contrib.auth.models import User
 class RegisterSerializer(ModelSerializer):
@@ -11,10 +11,12 @@ class UserSerializer(ModelSerializer):
         model=User
         fields=['first_name', 'last_name', 'username']
 
-class ProfileResourceSerailizer(ModelSerializer):
+class ProfileResourceSerializer(ModelSerializer):
+    followers_count = IntegerField(source='followers.count', read_only=True)
+    following_count = IntegerField(source='following.count', read_only=True)
     class Meta:
         model=Profile
-        fields=['user', 'name', 'bio', 'created_on']
+        fields=['user', 'name', 'bio', 'created_on', 'followers_count', 'following_count']
 
 from posts.serializers import PostSerializer, ReelSerializer
 
@@ -22,7 +24,9 @@ class ProfileSerializer(ModelSerializer):
     user=UserSerializer(read_only=True)
     posts=PostSerializer(read_only=True, many=True)
     reels=ReelSerializer(read_only=True, many=True)
+    followers_count = IntegerField(source='followers.count', read_only=True)
+    following_count = IntegerField(source='following.count', read_only=True)
     class Meta:
         model=Profile
-        fields=['user', 'name', 'bio', 'created_on', 'liked_posts', 'liked_reels', 'posts', 'reels']
+        fields=['user', 'name', 'bio', 'created_on', 'liked_posts', 'liked_reels', 'posts', 'reels', 'followers_count', 'following_count']
 

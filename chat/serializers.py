@@ -1,15 +1,15 @@
 from rest_framework.serializers import ModelSerializer
-from authentication.serializers import ProfileResourceSerailizer
+from authentication.serializers import ProfileResourceSerializer
 from chat.models import Chat, Conversation
 
 class ChatSerializer(ModelSerializer):
-    user1=ProfileResourceSerailizer(read_only=True)
-    user2=ProfileResourceSerailizer(read_only=True)
+    user1=ProfileResourceSerializer(read_only=True)
+    user2=ProfileResourceSerializer(read_only=True)
     class Meta:
         model=Chat
         fields=['user1', 'user2', 'created']
 
-class ConversationSerailizer(ModelSerializer):
+class ConversationSerializer(ModelSerializer):
     chat=ChatSerializer(read_only=True)
     class Meta:
         model=Conversation

@@ -6,6 +6,7 @@ class Profile(models.Model):
     name=models.CharField(max_length=120)
     bio=models.TextField(null=True)
     created_on=models.DateTimeField(auto_now_add=True)
+    followers=models.ManyToManyField("self", symmetrical=False, related_name="following", blank=True)
     
     def __str__(self):
         return self.user.username
