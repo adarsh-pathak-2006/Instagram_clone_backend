@@ -6,27 +6,17 @@ from posts.models import *
 
 class PostSerializer(ModelSerializer):
     user=ProfileResourceSerailizer(read_only=True)
+    like=ProfileResourceSerailizer(read_only=True, many=True)
     class Meta:
         model=Post
         fields='__all__'
 
 class ReelSerializer(ModelSerializer):
     user=ProfileResourceSerailizer(read_only=True)
+    like=ProfileResourceSerailizer(read_only=True, many=True)
     class Meta:
         model=Reel
         fields='__all__'
-
-class PostCommentSerializer(ModelSerializer):
-    user=ProfileResourceSerailizer(read_only=True)
-    class Meta:
-        model=PostComment
-        fields=['user', 'comment']
-
-class ReelCommentSerializer(ModelSerializer):
-    user=ProfileResourceSerailizer(read_only=True)
-    class Meta:
-        model=ReelComment
-        fields=['user', 'comment']
 
 class PostCommentReplySerializer(ModelSerializer):
     user=ProfileResourceSerailizer(read_only=True)
@@ -39,3 +29,17 @@ class ReelCommentReplySerializer(ModelSerializer):
     class Meta:
         model=ReelCommentReply
         fields=['user', 'reply']
+
+class PostCommentSerializer(ModelSerializer):
+    user=ProfileResourceSerailizer(read_only=True)
+    replies=PostCommentReplySerializer(read_only=True)
+    class Meta:
+        model=PostComment
+        fields=['user', 'comment', 'replies']
+
+class ReelCommentSerializer(ModelSerializer):
+    user=ProfileResourceSerailizer(read_only=True)
+    replies=ReelCommentReplySerializer(read_only=True)
+    class Meta:
+        model=ReelComment
+        fields=['user', 'comment']
