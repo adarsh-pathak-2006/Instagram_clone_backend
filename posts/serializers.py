@@ -1,7 +1,6 @@
-from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
-from posts.serializers import *
-from auth.serializers import *
-from posts.models import *
+from rest_framework.serializers import ModelSerializer
+from auth.serializers import ProfileResourceSerailizer
+from posts.models import Post, Reel, PostCommentReply, ReelCommentReply, PostComment, ReelComment
 
 
 class PostSerializer(ModelSerializer):
