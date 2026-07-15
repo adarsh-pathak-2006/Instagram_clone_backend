@@ -1,12 +1,16 @@
-from auth.serializers import ProfileSerializer, RegisterSerializer, FollowerFollowingSerializer
+from auth.serializers import ProfileSerializer, RegisterSerializer
 from auth.models import Profile
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.generics import RetrieveUpdateAPIView
+from rest_framework.generics import RetrieveUpdateAPIView, RetrieveAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.views import TokenObtainPairView
+from auth.throttle import RegisterThrottle, LoginThrottle, GeneralThrottle
 
 
 class RegisterAPI(APIView):
+    throttle_classes=[RegisterThrottle]
     def post(self, request):
         serial=RegisterSerializer(data=request.data)
         if serial.is_valid:
@@ -25,9 +29,20 @@ class RegisterAPI(APIView):
         else:
             return Response({ 'invalid':'invalid inputs' })
         
-class ProfileAPI(RetrieveUpdateAPIView):
+class CustomLoginTokenAPI(TokenObtainPairView):
+    throttle_classes=[LoginThrottle]
+        
+class MyProfileAPI(RetrieveUpdateAPIView):
+    permission_classes=[IsAuthenticated]
+    throttle_classes=[GeneralThrottle]
     serializer_class=ProfileSerializer
 
     def get_queryset(self):
         return Profile.objects.filter(user=self.request.user)
     
+class ProfileAPI(RetrieveAPIView):
+    permission_classes=[IsAuthenticated]
+    throttle_classes=[GeneralThrottle]
+    serializer_class=ProfileSerializer
+    queryset=Profile.objects.all()
+

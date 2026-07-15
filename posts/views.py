@@ -1,13 +1,17 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from posts.models import Post, Reel, PostComment, PostCommentReply, ReelComment, ReelCommentReply
 from posts.serializers import PostSerializer, ReelSerializer, PostCommentSerializer, PostCommentReplySerializer, ReelCommentSerializer, ReelCommentReplySerializer
 from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView
 from auth.models import Profile
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from auth.throttle import InAppThrottle
 
 
 class PostAPI(ListCreateAPIView):
+    permission_classes=[IsAuthenticated]
+    throttle_classes=[InAppThrottle]
     serializer_class=PostSerializer
 
     def get_queryset(self):
@@ -18,6 +22,8 @@ class PostAPI(ListCreateAPIView):
         serializer.save(user=profile_data)
 
 class ReelAPI(ListCreateAPIView):
+    permission_classes=[IsAuthenticated]
+    throttle_classes=[InAppThrottle]
     serializer_class=ReelSerializer
 
     def get_queryset(self):
@@ -28,6 +34,9 @@ class ReelAPI(ListCreateAPIView):
         serializer.save(user=profile_data)
 
 class PostCommentAPI(APIView):
+    throttle_classes=[InAppThrottle]
+    permission_classes=[IsAuthenticated]
+    
     def get(self, request, pk):
         post_data=get_object_or_404(Post, id=pk)
         data=PostComment.objects.filter(post=post_data)
@@ -44,6 +53,8 @@ class PostCommentAPI(APIView):
             return Response({ 'invalid':'invalid inputs' })
 
 class PostReplyAPI(APIView):
+    throttle_classes=[InAppThrottle]
+    permission_classes=[IsAuthenticated]
     def get(self, request, pk, ck):
         post_data=get_object_or_404(Post, id=pk)
         comment_data=get_object_or_404(PostComment, post=post_data, id=ck)
@@ -62,6 +73,8 @@ class PostReplyAPI(APIView):
             return Response({ 'invalid':'invalid inputs' })
         
 class ReelCommentAPI(APIView):
+    throttle_classes=[InAppThrottle]
+    permission_classes=[IsAuthenticated]
     def get(self, request, pk):
         reel_data=get_object_or_404(Reel, id=pk)
         data=ReelComment.objects.filter(reel=reel_data)
@@ -78,6 +91,8 @@ class ReelCommentAPI(APIView):
             return Response({ 'invalid':'invalid inputs' })
 
 class ReelReplyAPI(APIView):
+    throttle_classes=[InAppThrottle]
+    permission_classes=[IsAuthenticated]
     def get(self, request, pk, ck):
         reel_data=get_object_or_404(Reel, id=pk)
         comment_data=get_object_or_404(ReelComment, reel=reel_data, id=ck)

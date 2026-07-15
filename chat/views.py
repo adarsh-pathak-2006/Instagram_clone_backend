@@ -4,15 +4,18 @@ from chat.serializers import ChatSerializer, ConversationSerailizer, MessageSeri
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 
 class ChatAPI(ListCreateAPIView):
+    permission_classes=[IsAuthenticated]
     serializer_class=ChatSerializer
 
     def get_queryset(self):
         return Chat.objects.filter(user1=self.request.user)
     
 class ConversationAPI(APIView):
+    permission_classes=[IsAuthenticated]
     def get(self, request, pk):
         chat_data=get_object_or_404(Chat, id=pk, user1=request.user)
         data=Conversation.objects.filter(chat=chat_data)
