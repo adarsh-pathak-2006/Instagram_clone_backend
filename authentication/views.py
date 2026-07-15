@@ -1,12 +1,12 @@
-from auth.serializers import ProfileSerializer, RegisterSerializer
-from auth.models import Profile
+from authentication.serializers import ProfileSerializer, RegisterSerializer
+from authentication.models import Profile
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.generics import RetrieveUpdateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
-from auth.throttle import RegisterThrottle, LoginThrottle, GeneralThrottle
+from authentication.throttle import RegisterThrottle, LoginThrottle, GeneralThrottle
 
 
 class RegisterAPI(APIView):

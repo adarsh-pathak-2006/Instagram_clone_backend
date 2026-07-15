@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from auth.serializers import ProfileResourceSerailizer
+from authentication.serializers import ProfileResourceSerailizer
 from posts.models import Post, Reel, PostCommentReply, ReelCommentReply, PostComment, ReelComment
 
 

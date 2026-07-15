@@ -3,10 +3,10 @@ from posts.models import Post, Reel, PostComment, PostCommentReply, ReelComment,
 from posts.serializers import PostSerializer, ReelSerializer, PostCommentSerializer, PostCommentReplySerializer, ReelCommentSerializer, ReelCommentReplySerializer
 from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView
-from auth.models import Profile
+from authentication.models import Profile
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from auth.throttle import InAppThrottle
+from authentication.throttle import InAppThrottle
 
 
 class PostAPI(ListCreateAPIView):

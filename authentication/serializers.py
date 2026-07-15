@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from auth.models import Profile
+from authentication.models import Profile
 from django.contrib.auth.models import User
 from posts.serializers import PostSerializer, ReelSerializer
 

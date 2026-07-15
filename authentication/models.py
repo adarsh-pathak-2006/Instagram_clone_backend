@@ -11,4 +11,3 @@ class Profile(models.Model):
         return self.user.username
 
 
-#serializers abhi shi krna hai dhyam rkhna

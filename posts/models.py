@@ -1,5 +1,5 @@
 from django.db import models
-from auth.models import Profile
+from authentication.models import Profile
 
 class Post(models.Model):
     user=models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts')
