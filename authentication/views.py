@@ -64,3 +64,21 @@ class FollowAPIView(APIView):
         else:
             target.followers.add(current)
             return Response({'message': f'You are now following {target.name}'})
+
+class SuggestionsAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [GeneralThrottle]
+    
+    def get(self, request):
+        current_profile = get_object_or_404(Profile, user=request.user)
+        # Exclude the current user
+        suggestions = Profile.objects.exclude(id=current_profile.id)
+        # Exclude users the current user is already following
+        # Actually, `target.followers.add(current)` means `current` is in `target.followers`.
+        # So we want profiles where `current_profile` is NOT in their followers.
+        suggestions = suggestions.exclude(followers=current_profile)
+        # Limit to 5
+        suggestions = suggestions[:5]
+        
+        serial = ProfileResourceSerializer(suggestions, many=True)
+        return Response(serial.data)
